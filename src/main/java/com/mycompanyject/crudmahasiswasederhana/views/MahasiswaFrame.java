@@ -33,7 +33,10 @@ public class MahasiswaFrame extends javax.swing.JFrame {
      */
     public MahasiswaFrame() {
         initComponents();
-         mhsServis = new MahasiswaController();
+        nimValidasiLabel.setVisible(rootPaneCheckingEnabled);
+        namaValidasiLabel.setVisible(rootPaneCheckingEnabled);
+        alamatValidasiLabel.setVisible(rootPaneCheckingEnabled);
+        mhsServis = new MahasiswaController();
           
          MahasiswaTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
@@ -46,6 +49,40 @@ public class MahasiswaFrame extends javax.swing.JFrame {
         });
          this.statusAwal();
     }
+    void validasiInput(Mahasiswa o){
+        if(NIMTextField1.getText().equals("")){
+            nimValidasiLabel.setText("NIM-nya diisi mas");
+            nimValidasiLabel.setVisible(true);
+        }else if(!NIMTextField1.getText().matches("[0-9]*")){
+            nimValidasiLabel.setText("NIM-nya harus berisi angka mas");
+            nimValidasiLabel.setVisible(true);
+        }else if(NIMTextField1.getText().length() < 5){
+            nimValidasiLabel.setText("NIM-nya minimal 5 angka mas");
+            nimValidasiLabel.setVisible(true);
+        }else if(NIMTextField1.getText().length() > 12){
+            nimValidasiLabel.setText("NIM-nya maksimal 12 angka mas");
+            nimValidasiLabel.setVisible(true);
+        }else{
+            o.setNim(NIMTextField1.getText());
+            nimValidasiLabel.setVisible(false);
+        }
+        
+        if(NamaTextField2.getText().equals("")){
+            namaValidasiLabel.setText("Namanya diisi mas");
+            namaValidasiLabel.setVisible(true);
+        }else{
+            o.setNama(NamaTextField2.getText());
+            namaValidasiLabel.setVisible(false);
+        }
+        
+        if(AlamatTextField3.getText().equals("")){
+            alamatValidasiLabel.setText("Alamatnya diisi mas");
+            alamatValidasiLabel.setVisible(true);
+        }else{
+            o.setAlamat(AlamatTextField3.getText());
+            alamatValidasiLabel.setVisible(false);
+        }
+    }   
          
       void loadData() {
         try {
@@ -115,6 +152,9 @@ public class MahasiswaFrame extends javax.swing.JFrame {
         TambahBtn = new javax.swing.JButton();
         HapusBtn = new javax.swing.JButton();
         UbahBtn = new javax.swing.JButton();
+        nimValidasiLabel = new javax.swing.JLabel();
+        namaValidasiLabel = new javax.swing.JLabel();
+        alamatValidasiLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -160,6 +200,15 @@ public class MahasiswaFrame extends javax.swing.JFrame {
 
         UbahBtn.setText("Hapus");
 
+        nimValidasiLabel.setForeground(new java.awt.Color(255, 51, 51));
+        nimValidasiLabel.setText("jLabel1");
+
+        namaValidasiLabel.setForeground(new java.awt.Color(255, 51, 51));
+        namaValidasiLabel.setText("jLabel2");
+
+        alamatValidasiLabel.setForeground(new java.awt.Color(255, 51, 51));
+        alamatValidasiLabel.setText("jLabel3");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -167,24 +216,29 @@ public class MahasiswaFrame extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(67, 67, 67)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(NimLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(NamaLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(AlamatLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE))
                         .addGap(52, 52, 52)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(NIMTextField1)
-                            .addComponent(NamaTextField2)
-                            .addComponent(AlamatTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, 237, Short.MAX_VALUE))
-                        .addGap(73, 73, 73)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(TambahBtn)
-                            .addComponent(HapusBtn)
-                            .addComponent(UbahBtn)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(67, 67, 67)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(nimValidasiLabel)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(NIMTextField1)
+                                    .addComponent(NamaTextField2)
+                                    .addComponent(AlamatTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, 237, Short.MAX_VALUE))
+                                .addGap(73, 73, 73)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(TambahBtn)
+                                    .addComponent(HapusBtn)
+                                    .addComponent(UbahBtn)))
+                            .addComponent(namaValidasiLabel)
+                            .addComponent(alamatValidasiLabel))))
                 .addContainerGap(77, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -195,17 +249,23 @@ public class MahasiswaFrame extends javax.swing.JFrame {
                     .addComponent(NimLabel1)
                     .addComponent(NIMTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(TambahBtn))
-                .addGap(31, 31, 31)
+                .addGap(9, 9, 9)
+                .addComponent(nimValidasiLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(NamaLabel2)
                     .addComponent(NamaTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(HapusBtn))
-                .addGap(34, 34, 34)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(namaValidasiLabel)
+                .addGap(12, 12, 12)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(AlamatLabel3)
                     .addComponent(AlamatTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(UbahBtn))
-                .addGap(31, 31, 31)
+                .addGap(3, 3, 3)
+                .addComponent(alamatValidasiLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(268, Short.MAX_VALUE))
         );
@@ -239,6 +299,7 @@ public class MahasiswaFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             Mahasiswa mhs = new Mahasiswa(null, null, null);
+            validasiInput(mhs);
             mhs.setNim(NIMTextField1.getText());
             mhs.setNama(NamaTextField2.getText());
             mhs.setAlamat(AlamatTextField3.getText());
@@ -250,10 +311,11 @@ public class MahasiswaFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_TambahBtnActionPerformed
     
-    private void UbahBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UbahBtnActionPerformed
+    private void UbahBtnActionPerformed(java.awt.event.ActionEvent evt) {                                        
         // TODO add your handling code here:
         try {
             Mahasiswa mhs = new Mahasiswa(null, null, null);
+            validasiInput(mhs);
             mhs.setNim(NIMTextField1.getText());
             mhs.setNama(NamaTextField2.getText());
             mhs.setAlamat(AlamatTextField3.getText());
@@ -266,7 +328,7 @@ public class MahasiswaFrame extends javax.swing.JFrame {
 
     }
     
-    private void HapusBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HapusBtnActionPerformed
+    private void HapusBtnActionPerformed(java.awt.event.ActionEvent evt) {                                         
         // TODO add your handling code here:
         try {
             String nim = NIMTextField1.getText();
@@ -324,8 +386,11 @@ public class MahasiswaFrame extends javax.swing.JFrame {
     private javax.swing.JLabel NimLabel1;
     private javax.swing.JButton TambahBtn;
     private javax.swing.JButton UbahBtn;
+    private javax.swing.JLabel alamatValidasiLabel;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel namaValidasiLabel;
+    private javax.swing.JLabel nimValidasiLabel;
     // End of variables declaration//GEN-END:variables
 
 }
